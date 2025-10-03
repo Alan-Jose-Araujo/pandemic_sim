@@ -1,10 +1,10 @@
 #include <getopt.h>
 #include <memory>
 #include <string>
-#include "Headers/RandomWalkModel.h"
-#include "Headers/RandomWalkModelParallel.h"
-#include "Headers/State.h"
-#include "Headers/ProgramInfoViewer.h"
+#include "Headers/RandomWalkModel.hh"
+#include "Headers/RandomWalkModelParallel.hh"
+#include "Headers/State.hh"
+#include "Headers/ProgramInfoViewer.hh"
 
 using namespace std;
 

@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <vector>
-#include "Individual.h"
-#include "State.h"
-#include "RandomNumberGenerator.h"
-#include "ImageGenerator.h"
+#include "Individual.hh"
+#include "State.hh"
+#include "RandomNumberGenerator.hh"
+#include "ImageGenerator.hh"
 
 using namespace std;
 

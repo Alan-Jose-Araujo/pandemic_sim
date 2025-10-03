@@ -5,8 +5,8 @@
 #include <mutex>
 #include <vector>
 #include <iostream>
-#include "RandomWalkModel.h"
-#include "MultithreadingController.h"
+#include "RandomWalkModel.hh"
+#include "MultithreadingController.hh"
 
 using namespace std;
 

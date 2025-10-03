@@ -1,7 +1,7 @@
 #ifndef INDIVIDUAL_H
 #define INDIVIDUAL_H
 
-#include "State.h"
+#include "State.hh"
 
 /**
  * The individual is a component of the population.

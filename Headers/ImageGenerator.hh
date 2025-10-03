@@ -5,9 +5,9 @@
 #include <iostream>
 #include <string>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "lib/StbImageWrite.h"
-#include "Individual.h"
-#include "State.h"
+#include "lib/StbImageWrite.hh"
+#include "Individual.hh"
+#include "State.hh"
 
 using namespace std;
 

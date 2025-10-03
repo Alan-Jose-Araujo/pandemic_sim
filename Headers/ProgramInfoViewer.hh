@@ -2,8 +2,8 @@
 #define PROGRAM_INFO_VIWER_H
 
 #include <iostream>
-#include "State.h"
-#include "MultithreadingController.h"
+#include "State.hh"
+#include "MultithreadingController.hh"
 
 using namespace std;
 
