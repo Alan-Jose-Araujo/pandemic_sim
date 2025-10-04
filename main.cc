@@ -7,6 +7,8 @@
 #include "Headers/ProgramInfoViewer.hh"
 #include "Headers/Config.hh"
 
+#define STATE_COUNT 5
+
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -154,30 +156,7 @@ int main(int argc, char* argv[])
     }
 }
 
-    //Switch the probabilities as you need.
-
-    /**
-     * --------------------------------------------------------------
-     *           |  Healthy |  Isolated |   Sick  |  Dead |  Immune
-     *-----------|----------|-----------|---------|-------|----------
-     * Healthy   |   0.62   |    0.3    |   0.05  |  0.0  |  0.03
-     *-----------|----------|-----------|---------|-------|----------
-     * Isolated  |   0.05   |   0.64    |    0.1  | 0.01  |   0.2
-     *-----------|----------|-----------|---------|-------|----------
-     * Sick      |    0.0   |    0.1    |   0.65  |  0.1  |  0.15
-     *-----------|----------|-----------|---------|-------|----------
-     * Dead      |    0.0   |    0.0    |    0.0  |  1.0  |   0.0
-     *-----------|----------|-----------|---------|-------|----------
-     * Immune    |    0.0   |   0.05    |   0.02  |  0.0  |  0.93
-     *-----------|----------|-----------|---------|-------|----------
-     */
-    vector<vector<double>> transitionProbabilities = {
-        {0.62, 0.3, 0.05, 0.0, 0.03}, // healthy
-        {0.05, 0.64, 0.1, 0.01, 0.2}, // isolated
-        {0.0,  0.1,  0.65, 0.1,  0.15}, // sick
-        {0.0,  0.0,  0.0,  1.0,  0.0},  // dead
-        {0.0,  0.05, 0.02, 0.0,  0.93}  // immune
-    };
+    vector<vector<double>> transitionProbabilities = TRANSITION_PROBABILITIES;
     bool isMultiThreading = threadCount > 1;
 
     printHeaders(
@@ -191,6 +170,11 @@ int main(int argc, char* argv[])
      */
     try
     {
+        int transitionProbabilitiesSize = transitionProbabilities.size();
+        if(transitionProbabilitiesSize != STATE_COUNT) {
+            throw new runtime_error("ERROR: THE TRANSITION PROBABILITIES PROVIDED DIFFER FROM THE NUMBER OF INDIVIDUAL STATES.");
+        }
+
         if(isMultiThreading) {
             unique_ptr<RandomWalkModelParallel> model;
             for(int i = 0; i < numberOfRuns; ++i) {

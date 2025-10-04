@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <vector>
 #include "DefaultParams.hh"
 
 using namespace std;
@@ -41,6 +42,7 @@ class Config {
         bool applySocialDistanceEffect;
         int threadCount;
         bool generateImage;
+        vector<vector<double>> transition_probabilities;
 
         static Config buildFromConfigFile(const string& path) {
             if(!isValidJson(path)) {
@@ -61,6 +63,7 @@ class Config {
             config.applySocialDistanceEffect = jsonParser.value("apply_social_distance_effect", APPLY_SOCIAL_DISTANCE_EFFECT);
             config.threadCount = jsonParser.value("thread_count", THREAD_COUNT);
             config.generateImage = jsonParser.value("generate_image", GENERATE_IMAGE);
+            config.transition_probabilities = jsonParser.value("transition_probabilities", TRANSITION_PROBABILITIES);
 
             return config;
         }

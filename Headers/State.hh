@@ -1,9 +1,6 @@
 #ifndef STATE_H
 #define STATE_H
 
-/**
- * Here you can add how many states you need.
- */
 enum class State {
 
     healthy = 0,
