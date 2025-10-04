@@ -13,6 +13,24 @@ using json = nlohmann::json;
 
 class Config {
 
+    private:
+
+        static bool isValidJson(const string& path) {
+            try {
+                ifstream file(path);
+                if(!file.is_open()) {
+                    return false;
+                }
+                (void) json::parse(file); // In fail case, throws exception.
+                file.close();
+                return true;
+            }
+            catch(...) {
+                return false;
+            }
+            
+        }
+
     public:
 
         int numberOfRuns;
@@ -25,11 +43,11 @@ class Config {
         bool generateImage;
 
         static Config buildFromConfigFile(const string& path) {
-            ifstream in(path);
-
-            if (!in.is_open()) {
-                throw runtime_error("Could not open the config file: " + path);
+            if(!isValidJson(path)) {
+                throw runtime_error("ERROR: Could not open the config file: " + path + ". File not found or invalid syntax.");
             }
+
+            ifstream in(path);
 
             json jsonParser;
             in >> jsonParser;
