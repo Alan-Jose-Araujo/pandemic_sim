@@ -5,24 +5,26 @@
 #include "Headers/RandomWalkModelParallel.hh"
 #include "Headers/State.hh"
 #include "Headers/ProgramInfoViewer.hh"
+#include "Headers/Config.hh"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
     //Default params.
-    int numberOfRuns = 1000;
-    int populationMatrixSize = 100;
-    int numberOfGenerations = 10;
-    double contagionFactor = 0.5;
-    int requestedStateCount = static_cast<int>(State::dead);
-    bool applySocialDistanceEffect = false;
-    int threadCount = 1;
-    bool generateImage = false;
+    int numberOfRuns = NUMBER_OF_RUNS;
+    int populationMatrixSize = POPULATION_MATRIX_SIZE;
+    int numberOfGenerations = NUMBER_OF_GENERATIONS;
+    double contagionFactor = CONTAGION_FACTOR;
+    int requestedStateCount = REQUESTED_STATE_COUNT;
+    bool applySocialDistanceEffect = APPLY_SOCIAL_DISTANCE_EFFECT;
+    int threadCount = THREAD_COUNT;
+    bool generateImage = GENERATE_IMAGE;
+    Config config;
     
     //Parse CLI options.
     //Don't move.
-    const char* shortOptions = "r:p:g:st:c:o:ihv";
+    const char* shortOptions = "r:p:g:st:c:o:f:ihv";
     const option longOptions[] = {
         {"runs", optional_argument, nullptr, 'r'},
         {"population", optional_argument, nullptr, 'p'},
@@ -31,6 +33,7 @@ int main(int argc, char* argv[])
         {"threads", optional_argument, nullptr, 't'},
         {"contagion-factor", optional_argument, nullptr, 'c'},
         {"output-state", optional_argument, nullptr, 'o'},
+        {"config-file", optional_argument, nullptr, 'f'},
         {"image", no_argument, nullptr, 'i'},
         {"version", no_argument, nullptr, 'v'},
         {"help", no_argument, nullptr, 'h'},
@@ -111,6 +114,30 @@ int main(int argc, char* argv[])
                 cerr << exception.what() << endl;
                 exit(EXIT_FAILURE);
             }
+        } break;
+        case 'f': {
+            if (optarg == nullptr && optind < argc && argv[optind][0] != '-') {
+                optarg = argv[optind++];
+            }
+            try {
+                string configFilePath = optarg;
+                config = Config::buildFromConfigFile(configFilePath);
+
+                numberOfRuns = config.numberOfRuns;
+                populationMatrixSize = config.populationMatrixSize;
+                numberOfGenerations = config.numberOfGenerations;
+                contagionFactor = config.contagionFactor;
+                requestedStateCount = config.requestedStateCount;
+                applySocialDistanceEffect = config.applySocialDistanceEffect;
+                threadCount = config.threadCount;
+                generateImage = config.generateImage;
+            }
+            catch(const runtime_error& exception)
+            {
+                cerr << exception.what() << endl;
+                exit(EXIT_FAILURE);
+            }
+            
         } break;
         case 'i': {
             generateImage = true;
