@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const char VERSION[] = "0.4.7";
+const char VERSION[] = "0.5.0";
 
 inline const char * const boolToString(bool boolean)
 {
@@ -72,6 +72,7 @@ void printHelp()
     cout << "-t | --threads                :       Run the simulations with a multi-threaded profile. Specifies the number of threads the program may use. The maximum value is the number of threads available on the current processor (integer)." << endl;
     cout << "-c | --contagion-factor       :       Defines the disease contagion factor, minimum 0.1, maximum 1 (double)." << endl;
     cout << "-o | --output-state           :       Defines the state for which you want to obtain the number of affected individuals (integer)." << endl;
+    cout << "-f | --config-file            :       Set the .json config file. Check the docs to see the file standard." << endl;
     cout << "-i | --image                  :       Generate a visual disease spread example as a .png image." << endl;
     cout << "---------------------------------------------------------------------------------------------" << endl;
     cout << "Default params: r(100), p(100), p(10), c(0.5), o(3), s(false), t(1), i(false)" << endl;

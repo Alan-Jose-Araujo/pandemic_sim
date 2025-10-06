@@ -22,9 +22,7 @@ class Config {
                 if(!file.is_open()) {
                     return false;
                 }
-                (void) json::parse(file); // In fail case, throws exception.
-                file.close();
-                return true;
+                return json::accept(file);
             }
             catch(...) {
                 return false;
