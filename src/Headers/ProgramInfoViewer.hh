@@ -51,6 +51,7 @@ void printHelp()
     cout << "Usage: simulator [-v | --version] [-h | --help] [-r | --runs <value>] [-p | --population <value>]" << endl;
     cout << "                 [-g | --generations <value>] [-s | --social-distance-effect] [-t | --threads <value>]" << endl;
     cout << "                 [-c | --contagion-factor <value>] [-o | --output-state <value>] [-i | --image]" << endl;
+    cout << "                 [-f | --config-file <value>]]" << endl;
     cout << "\n" << endl;
     cout << "Multithreading is available : " << boolToString(MultithreadingController::currentProcessorSupportsMultithreading()) << "." << endl;
     cout << "CPU Threads available       : " << MultithreadingController::getCurrentProcessorAvailableThreads() << "." << endl;
@@ -75,7 +76,7 @@ void printHelp()
     cout << "-f | --config-file            :       Set the .json config file. Check the docs to see the file standard." << endl;
     cout << "-i | --image                  :       Generate a visual disease spread example as a .png image." << endl;
     cout << "---------------------------------------------------------------------------------------------" << endl;
-    cout << "Default params: r(100), p(100), p(10), c(0.5), o(3), s(false), t(1), i(false)" << endl;
+    cout << "Default params: r(1000), p(100), g(10), c(0.5), o(3), s(false), t(1), i(false)" << endl;
 }
 
 void printVersion()

@@ -3,12 +3,13 @@
 #endif
 
 #include <vector>
+#include "State.hh"
 
 #define NUMBER_OF_RUNS 1000
 #define POPULATION_MATRIX_SIZE 100
 #define NUMBER_OF_GENERATIONS 10
 #define CONTAGION_FACTOR 0.5
-#define REQUESTED_STATE_COUNT 4
+#define REQUESTED_STATE_COUNT (int) State::dead
 #define APPLY_SOCIAL_DISTANCE_EFFECT false
 #define THREAD_COUNT 1
 #define GENERATE_IMAGE false

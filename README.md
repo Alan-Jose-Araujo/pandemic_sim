@@ -159,17 +159,40 @@ This parameter informs the state of the number of individuals that should be dis
   <li><b style="color: blue;">Immune</b>: 4</li>
 </ul>
 
+#### -f | --config-file
+
 #### -i | --image
 
 <p>
-If this option is present, the program will generate an image as a visual example of the dispersion of individuals with each state represented by a color.
-<ul>
-  <li><b style="color: green;">Green</b> (Healthy)</li>
-  <li><b style="color: black;">Black</b> (Isolated)</li>
-  <li><b style="color: yellow;">Yellow</b> (Sick)</li>
-  <li><b style="color: red;">Red</b> (Dead)</li>
-  <li><b style="color: blue;">Blue</b> (Immune)</li>
-</ul>
+Use this option to define the path to a JSON config file, it will override the standard params.
+Check the file standard:
+<br>
+<code>
+{
+  <br>
+  &nbsp;&nbsp;"number_of_runs": &lt;int&gt;,
+  <br>
+  &nbsp;&nbsp;"population_matrix_size": &lt;int&gt;,
+  <br>
+  &nbsp;&nbsp;"number_of_generations": &lt;int&gt;,
+  <br>
+  &nbsp;&nbsp;"contagion_factor": &lt;double&gt;,
+  <br>
+  &nbsp;&nbsp;"requested_state_count": &lt;int&gt;,
+  <br>
+  &nbsp;&nbsp;"apply_social_distance_effect": &lt;boolean&gt;,
+  <br>
+  &nbsp;&nbsp;"thread_count": &lt;int&gt;,
+  <br>
+  &nbsp;&nbsp;"generate_image": &lt;boolean&gt;
+  <br>
+  &nbsp;&nbsp;"transition_probabilities": &lt;double[][]&gt;
+  <br>
+}
+</code>
+<br>
+It will overrides only the given keys. 
+</p>
 
 #### -v | --version
 
