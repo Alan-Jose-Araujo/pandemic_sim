@@ -1,5 +1,5 @@
-#ifndef RANDOM_WAL_MODEL_H
-#define RANDOM_WAL_MODEL_H
+#ifndef RANDOM_WALK_MODEL_H
+#define RANDOM_WALK_MODEL_H
 
 #include <iostream>
 #include <vector>
