@@ -200,14 +200,14 @@ class RandomWalkModel {
             return cumulated;
         }
 
-        void generateImage()
+        void generateImage(string imagesDir)
         {
             const char* imageFilename = "Visual_Example_";
             time_t currentTimestamp;
             time(&currentTimestamp);
             char buffer[20];
             strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", localtime(&currentTimestamp));
-            string fullImageFilename = string(imageFilename) + buffer + ".png";
+            string fullImageFilename = string(imagesDir + "/" + imageFilename) + buffer + ".png";
             ImageGenerator::generate(fullImageFilename.c_str(), this->population);
         }
 
