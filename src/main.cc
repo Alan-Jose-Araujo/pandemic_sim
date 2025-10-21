@@ -6,6 +6,7 @@
 #include "Headers/State.hh"
 #include "Headers/ProgramInfoViewer.hh"
 #include "Headers/Config.hh"
+#include "Headers/DirectoryHandler.hh"
 
 #define STATE_COUNT 5
 
@@ -155,7 +156,11 @@ int main(int argc, char* argv[])
             exit(EXIT_SUCCESS);
         case 0:
             if(string(longOptions[optionIndex].name) == "output-image-path") {
-                imagesDirectory = string(optarg);
+                if(optarg) {
+                    imagesDirectory = string(optarg);
+                } else {
+                    imagesDirectory = "./";
+                }
             }
         break;
         default:
@@ -193,7 +198,8 @@ int main(int argc, char* argv[])
                 cout << model->getStateCount(State(requestedStateCount)) << endl;
             }
             if(generateImage) {
-                model->generateImage();
+                DirectoryHandler::createDirectoryIfNotExists(imagesDirectory);
+                model->generateImage(imagesDirectory);
             }
         }
         else {
@@ -206,7 +212,8 @@ int main(int argc, char* argv[])
                 cout << model->getStateCount(State(requestedStateCount)) << endl;
             }
             if(generateImage) {
-                model->generateImage();
+                DirectoryHandler::createDirectoryIfNotExists(imagesDirectory);
+                model->generateImage(imagesDirectory);
             }
         }
 
