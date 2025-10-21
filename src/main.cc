@@ -22,6 +22,7 @@ int main(int argc, char* argv[])
     bool applySocialDistanceEffect = APPLY_SOCIAL_DISTANCE_EFFECT;
     int threadCount = THREAD_COUNT;
     bool generateImage = GENERATE_IMAGE;
+    string imagesDirectory = "./";
     Config config;
     
     //Parse CLI options.
@@ -37,12 +38,14 @@ int main(int argc, char* argv[])
         {"output-state", optional_argument, nullptr, 'o'},
         {"config-file", optional_argument, nullptr, 'f'},
         {"image", no_argument, nullptr, 'i'},
+        {"output-image-path", optional_argument, nullptr, 0},
         {"version", no_argument, nullptr, 'v'},
         {"help", no_argument, nullptr, 'h'},
         {nullptr, no_argument, nullptr, 0}
     };
     int cliOption;
-    while ((cliOption = getopt_long(argc, argv, shortOptions, longOptions, nullptr)) != -1) {
+    int optionIndex = 0;
+    while ((cliOption = getopt_long(argc, argv, shortOptions, longOptions, &optionIndex)) != -1) {
     switch (cliOption) {
         case 'r': {
             if (optarg == nullptr && optind < argc && argv[optind][0] != '-') {
@@ -122,7 +125,7 @@ int main(int argc, char* argv[])
                 optarg = argv[optind++];
             }
             try {
-                string configFilePath = optarg;
+                string configFilePath = string(optarg);
                 config = Config::buildFromConfigFile(configFilePath);
 
                 numberOfRuns = config.numberOfRuns;
@@ -150,6 +153,11 @@ int main(int argc, char* argv[])
         case 'v':
             printVersion();
             exit(EXIT_SUCCESS);
+        case 0:
+            if(string(longOptions[optionIndex].name) == "output-image-path") {
+                imagesDirectory = string(optarg);
+            }
+        break;
         default:
             cerr << "Unknown option. Use -h for usage information.\n";
             exit(EXIT_FAILURE);
