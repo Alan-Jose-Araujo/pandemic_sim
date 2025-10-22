@@ -68,11 +68,7 @@ public:
             }
         }
 
-        if (stbi_write_png(name, columns, lines, 3, imageBuffer.data(), columns * 3)) {
-            cout << "\nImage saved successfully as " << name << endl;
-        } else {
-            cerr << "\nERROR: Failed to save image as " << name << endl;
-        }
+        stbi_write_png(name, columns, lines, 3, imageBuffer.data(), columns * 3);
     }
 
 };

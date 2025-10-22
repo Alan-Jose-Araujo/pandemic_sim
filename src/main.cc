@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
     int threadCount = THREAD_COUNT;
     bool generateImage = GENERATE_IMAGE;
     string imagesDirectory = "./";
+    int imageFramesInterval = 0;
     Config config;
     
     //Parse CLI options.
@@ -40,6 +41,7 @@ int main(int argc, char* argv[])
         {"config-file", optional_argument, nullptr, 'f'},
         {"image", no_argument, nullptr, 'i'},
         {"output-image-path", optional_argument, nullptr, 0},
+        {"image-frames-interval", optional_argument, nullptr, 0},
         {"version", no_argument, nullptr, 'v'},
         {"help", no_argument, nullptr, 'h'},
         {nullptr, no_argument, nullptr, 0}
@@ -162,6 +164,11 @@ int main(int argc, char* argv[])
                     imagesDirectory = "./";
                 }
             }
+
+            if (string(longOptions[optionIndex].name) == "image-frames-interval") {
+                imageFramesInterval = optarg ? stoi(optarg) : 0;
+                cout << "Frame interval set to: " << imageFramesInterval << endl;
+            }
         break;
         default:
             cerr << "Unknown option. Use -h for usage information.\n";
@@ -196,10 +203,15 @@ int main(int argc, char* argv[])
                 model->parallelSimulation(numberOfGenerations);
                 //Print the individuals count based on current state.
                 cout << model->getStateCount(State(requestedStateCount)) << endl;
+                if (generateImage && imageFramesInterval > 0 && ((i + 1) % imageFramesInterval == 0)) {
+                    DirectoryHandler::createDirectoryIfNotExists(imagesDirectory);
+                    model->generateImage(imagesDirectory);
+                }
             }
-            if(generateImage) {
+            if(generateImage && imageFramesInterval == 0) {
                 DirectoryHandler::createDirectoryIfNotExists(imagesDirectory);
                 model->generateImage(imagesDirectory);
+                cout << "Final visual example saved at: " << imagesDirectory << endl;
             }
         }
         else {
@@ -210,10 +222,15 @@ int main(int argc, char* argv[])
                 model->simulation(numberOfGenerations);
                 //Print the individuals count based on current state.
                 cout << model->getStateCount(State(requestedStateCount)) << endl;
+                if (generateImage && imageFramesInterval > 0 && ((i + 1) % imageFramesInterval == 0)) {
+                    DirectoryHandler::createDirectoryIfNotExists(imagesDirectory);
+                    model->generateImage(imagesDirectory);
+                }
             }
-            if(generateImage) {
+            if(generateImage && imageFramesInterval == 0) {
                 DirectoryHandler::createDirectoryIfNotExists(imagesDirectory);
                 model->generateImage(imagesDirectory);
+                cout << "Final visual example saved at: " << imagesDirectory << endl;
             }
         }
 

@@ -7,6 +7,7 @@
 #include "State.hh"
 #include "RandomNumberGenerator.hh"
 #include "ImageGenerator.hh"
+#include "DirectoryHandler.hh"
 
 using namespace std;
 
@@ -202,12 +203,8 @@ class RandomWalkModel {
 
         void generateImage(string imagesDir)
         {
-            const char* imageFilename = "Visual_Example_";
-            time_t currentTimestamp;
-            time(&currentTimestamp);
-            char buffer[20];
-            strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", localtime(&currentTimestamp));
-            string fullImageFilename = string(imagesDir + "/" + imageFilename) + buffer + ".png";
+            string imageFilename = "Visual_Example_";
+            string fullImageFilename = DirectoryHandler::generateTimestampedFilename(imagesDir, imageFilename);
             ImageGenerator::generate(fullImageFilename.c_str(), this->population);
         }
 
