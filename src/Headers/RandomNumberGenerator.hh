@@ -13,6 +13,10 @@ class RandomNumberGenerator {
 
     private:
 
+        std::mt19937 gen;
+
+        std::uniform_real_distribution<> dis;
+
         /**
          * The mersenne twister engine is a general-purpose pseudorandom number generator (PRNG).
          * Reference: M. Matsumoto and T. Nishimura, Mersenne Twister: A 623-Dimensionally
@@ -31,12 +35,30 @@ class RandomNumberGenerator {
 
     public:
 
-        double getRandomNumber(double minValue = 0, double maxValue = 1)
+        RandomNumberGenerator(double minValue, double maxValue, unsigned int seed) : dis(minValue, maxValue)
         {
-            static std::uniform_real_distribution<> dis(minValue, maxValue);
-            return dis(this->getGenerator());
+            std::random_device rd;
+            size_t combinedSeed = std::hash<size_t>()(seed ^ rd());
+            gen.seed(combinedSeed);
         }
 
+        RandomNumberGenerator(unsigned int seed)
+        : RandomNumberGenerator(0.0, 1.0, seed) {}
+
+        RandomNumberGenerator()
+        : RandomNumberGenerator(0.0, 1.0, std::chrono::high_resolution_clock::now().time_since_epoch().count()) {}
+
+        double getRandomNumber()
+        {
+            return dis(this->gen);
+        }
+
+        double getRandomNumber(double minValue, double maxValue)
+        {
+            std::uniform_real_distribution<> localDis(minValue, maxValue);
+            return localDis(this->gen);
+        }
+        
 };
 
 #endif

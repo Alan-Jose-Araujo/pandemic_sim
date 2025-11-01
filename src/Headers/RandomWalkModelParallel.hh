@@ -5,6 +5,7 @@
 #include <mutex>
 #include <vector>
 #include <iostream>
+#include <memory>
 #include "RandomWalkModel.hh"
 #include "MultithreadingController.hh"
 
@@ -18,10 +19,10 @@ class RandomWalkModelParallel : public RandomWalkModel {
 
         int currentProcessorAvailableThreads;
 
-        void processChunk(int startRow, int endRow) {
+        void processChunk(int startRow, int endRow, RandomNumberGenerator* rng) {
             for (int i = startRow; i < endRow; ++i) {
                 for (int j = 0; j < this->populationMatrixSize; ++j) {
-                    this->individualTransition(i, j);
+                    this->individualTransition(i, j, rng);
                 }
             }
         }
@@ -53,6 +54,12 @@ class RandomWalkModelParallel : public RandomWalkModel {
         }
 
         void parallelSimulation(int generations) {
+            vector<unique_ptr<RandomNumberGenerator>> threadRngs;
+
+            for(int t = 0; t < this->threadCount; ++t) {
+                threadRngs.push_back(make_unique<RandomNumberGenerator>(t + 1));
+            }
+
             for (int g = 0; g < generations; ++g) {
                 // Create threads to process chunks of the population grid.
                 vector<thread> threads;
@@ -62,9 +69,8 @@ class RandomWalkModelParallel : public RandomWalkModel {
                 for (int t = 0; t < this->threadCount; ++t) {
                     int startRow = t * rowsPerThread;
                     int endRow = startRow + rowsPerThread + (t < remainingRows ? 1 : 0);
-
-                    threads.emplace_back([this, startRow, endRow]() {
-                        processChunk(startRow, endRow);
+                    threads.emplace_back([this, startRow, endRow, rgnPtr = threadRngs[t].get()]() {
+                        processChunk(startRow, endRow, rgnPtr);
                     });
                 }
 

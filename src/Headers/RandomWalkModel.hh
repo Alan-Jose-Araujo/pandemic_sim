@@ -18,10 +18,7 @@ class RandomWalkModel {
 
     protected:
 
-        /**
-         * Random number generator machine.
-         */
-        RandomNumberGenerator* randomNumberGenerator;
+        RandomNumberGenerator sequentialRng;
 
         /**
          * The population grid stores the individuals based on matrix size param.
@@ -79,7 +76,7 @@ class RandomWalkModel {
         /**
          * Uses a randomic rate to calculate the social interactions.
          */
-        void computeSocialInteractions(int line, int column)
+        void computeSocialInteractions(int line, int column, RandomNumberGenerator* randomNumberGenerator)
         {
             int initialLine = max(0, line - 1);
             int finalLine = min(line + 2, this->populationMatrixSize);
@@ -98,7 +95,7 @@ class RandomWalkModel {
                     }
 
                     if (neighbour.state == State::sick) {
-                        computeSickContact(nextPopulation[line][column], neighbour);
+                        computeSickContact(nextPopulation[line][column], neighbour, randomNumberGenerator);
                     }
                 }
             }
@@ -112,11 +109,11 @@ class RandomWalkModel {
         /**
          * Handle the probability of an individual turns sick.
          */
-        void computeSickContact(Individual& individual, Individual& neighbour)
+        void computeSickContact(Individual& individual, Individual& neighbour, RandomNumberGenerator* randomNumberGenerator)
         {
             if (individual.state == State::dead) return;
 
-            double number = this->randomNumberGenerator->getRandomNumber();
+            double number = randomNumberGenerator->getRandomNumber();
 
             if (number < this->contagionFactor) {
                 individual.state = State::sick;
@@ -126,7 +123,7 @@ class RandomWalkModel {
         /**
          * Handle the individual state transition.
          */
-        void individualTransition(int line, int column)
+        void individualTransition(int line, int column, RandomNumberGenerator* randomNumberGenerator)
         {
             Individual& individual = population[line][column];
 
@@ -135,10 +132,10 @@ class RandomWalkModel {
             }
 
             if (individual.state == State::healthy) {
-                this->computeSocialInteractions(line, column);
+                this->computeSocialInteractions(line, column, randomNumberGenerator);
             } else {
                 const vector<double>& probabilities = this->transitionProbabilities[static_cast<int>(individual.state)];
-                double number = this->randomNumberGenerator->getRandomNumber();
+                double number = randomNumberGenerator->getRandomNumber();
 
                 double cumulativeProbability = 0.0;
                 for (size_t i = 0; i < probabilities.size(); ++i) {
@@ -158,7 +155,7 @@ class RandomWalkModel {
         {
             for (int i = 0; i < this->populationMatrixSize; ++i) {
                 for (int j = 0; j < this->populationMatrixSize; ++j) {
-                    this->individualTransition(i, j);
+                    this->individualTransition(i, j, &this->sequentialRng);
                 }
             }
             this->population = this->nextPopulation;
@@ -170,9 +167,11 @@ class RandomWalkModel {
          * Constructor.
          */
         RandomWalkModel(int size, double contagionFactor, bool socialDistanceEffect)
-            : populationMatrixSize(size), contagionFactor(contagionFactor), applySocialDistanceEffect(socialDistanceEffect)
+            : populationMatrixSize(size),
+            contagionFactor(contagionFactor),
+            applySocialDistanceEffect(socialDistanceEffect),
+            sequentialRng()
         {
-            this->randomNumberGenerator = new RandomNumberGenerator();    
             this->initializePopulation();
             this->initializeSickIndividuals();
         }
