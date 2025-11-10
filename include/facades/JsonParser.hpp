@@ -27,7 +27,7 @@ namespace facades
 
         public:
 
-            JsonParser(const std::string json_file_path);
+            JsonParser(const std::string &json_file_path);
 
             static bool is_valid_json(const std::string json_file_path);
 
