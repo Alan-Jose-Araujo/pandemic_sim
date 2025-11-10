@@ -14,20 +14,18 @@ namespace presenters
     class ProgramInfoViwer
     {
 
-        private:
-
-            const char VERSION[];
-
         public:
 
-            void print_ASCII_art();
+            static const char VERSION[10];
+
+            static void print_ASCII_art();
 
             // TODO: Define &Config instance as param.
-            void print_headers();
+            static void print_headers();
 
-            void print_help();
+            static void print_help();
 
-            void print_version();
+            static void print_version();
     };
     
 
