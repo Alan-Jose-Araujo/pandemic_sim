@@ -5,7 +5,7 @@
 namespace facades
 {
 
-    JsonParser::JsonParser(const std::string json_file_path)
+    JsonParser::JsonParser(const std::string &json_file_path)
     : json_file_path(json_file_path)
     {
         std::ifstream file(json_file_path);
