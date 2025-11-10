@@ -1,4 +1,6 @@
 #include "../../include/simulator/Config.hpp"
+#include "../../include/facades/JsonParser.hpp"
+#include <fstream>
 
 namespace simulator
 {
@@ -23,6 +25,26 @@ namespace simulator
         generate_image(generate_image),
         transition_probabilities(transition_probabilities)
         {}
+
+    Config Config::build_from_config_file(const std::string &file_path)
+    {
+        facades::JsonParser parser(file_path);
+        json base_parser = parser.get_base_parser();
+
+        Config config(
+            base_parser["number_of_runs"],
+            base_parser["population_matrix_size"],
+            base_parser["number_of_generations"],
+            base_parser["contagion_factor"],
+            base_parser["requested_state_count"],
+            base_parser["apply_social_distance_effect"],
+            base_parser["thread_count"],
+            base_parser["generate_image"],
+            base_parser["transition_probabilities"].get<std::vector<std::vector<double>>>()
+        );
+
+        return config;
+    }
 
     int Config::get_number_of_runs() const
     {
