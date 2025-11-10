@@ -10,6 +10,7 @@
 #define INDIVIDUAL_H
 
 #include <string>
+#include <map>
 
 namespace simulator
 {
@@ -19,15 +20,19 @@ namespace simulator
 
         private:
 
-            std::string state;
+            int state;
 
         public:
+
+            static std::map<std::string, int> valid_states;
 
             Individual(std::string state);
 
             void set_state(std::string state);
 
-            std::string get_state();
+            void set_state(int state);
+
+            int get_state();
 
     };
     

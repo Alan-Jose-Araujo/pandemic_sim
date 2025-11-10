@@ -41,6 +41,8 @@ namespace simulator
 
             void compute_social_interactions(int line, int column, rng::RandomNumberGenerator* rng);
 
+            void compute_sick_contact(Individual& individual, Individual& neighbour, rng::RandomNumberGenerator* rng);
+
             void individual_transition(int line, int column, rng::RandomNumberGenerator* rng);
 
             void next_generation();
@@ -55,7 +57,7 @@ namespace simulator
 
             void set_transition_probabilities(const std::vector<std::vector<double>>& probabilities);
 
-            int get_state_count(const std::string& state);
+            int get_state_count(const int state);
 
             void generate_image(const std::string& images_directory);
 
