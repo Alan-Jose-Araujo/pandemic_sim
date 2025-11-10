@@ -1,4 +1,5 @@
 #include "../../include/presenters/ProgramInfoViwer.hpp"
+#include "../../include/helpers.hpp"
 #include <iostream>
 
 namespace presenters
@@ -18,51 +19,50 @@ namespace presenters
         std::cout << "                \\/     \\/      \\/    \\/      \\/        \\/_____/       \\/          \\/ " << std::endl;
     }
 
-    // TODO: Implement.
-    // void ProgramInfoViwer::print_headers(Config &config)
-    // {
-    //     std::cout << "-- Number of runs: " << intParams[0] << std::endl;
-    //     std::cout << "-- Population matrix size: " << intParams[1] << " (" << intParams[1] * intParams[1] << " individuals)" << std::endl;
-    //     std::cout << "-- Number of generations: " << intParams[2] << std::endl;
-    //     std::cout << "-- Disease contagion factor: " << doubleParams[0] << std::endl;
-    //     std::cout << "-- Social distance effect applyied: " << boolToString(boolParams[0]) << std::endl;
-    //     std::cout << "-- Threads: " << intParams[3] << std::endl;
-    //     std::cout << "-- Generate visual example image on finish: " << boolToString(boolParams[1]) << std::endl;
-    // }
+    void ProgramInfoViwer::print_headers(simulator::Config &config)
+    {
+        std::cout << "-- Number of runs: " << config.get_number_of_runs() << std::endl;
+        std::cout << "-- Population matrix size: " << config.get_population_matrix_size() << " (" << config.get_population_matrix_size() * config.get_population_matrix_size() << " individuals)" << std::endl;
+        std::cout << "-- Number of generations: " << config.get_number_of_generations() << std::endl;
+        std::cout << "-- Disease contagion factor: " << config.get_contagion_factor() << std::endl;
+        std::cout << "-- Social distance effect applyied: " << bool_to_string(config.get_apply_social_distance_effect()) << std::endl;
+        std::cout << "-- Threads: " << config.get_thread_count() << std::endl;
+        std::cout << "-- Generate visual example image on finish: " << bool_to_string(config.get_generate_image()) << std::endl;
+    }
 
-    // void ProgramInfoViwer::print_help()
-    // {
-    //     std::cout << "-------------------------------------------------------------------------------------------" << std::endl;
-    //     std::cout << "Usage: simulator [-v | --version] [-h | --help] [-r | --runs <value>] [-p | --population <value>]" << std::endl;
-    //     std::cout << "                 [-g | --generations <value>] [-s | --social-distance-effect] [-t | --threads <value>]" << std::endl;
-    //     std::cout << "                 [-c | --contagion-factor <value>] [-o | --output-state <value>] [-i | --image]" << std::endl;
-    //     std::cout << "                 [-f | --config-file <value>]]" << std::endl;
-    //     std::cout << "\n" << std::endl;
-    //     std::cout << "Multithreading is available : " << boolToString(MultithreadingController::currentProcessorSupportsMultithreading()) << "." <<std:: endl;
-    //     std::cout << "CPU Threads available       : " << MultithreadingController::getCurrentProcessorAvailableThreads() << "." << std::endl;
-    //     std::cout << "\n" << std::endl;
-    //     std::cout << "Individual states           : " << std::endl;
-    //     std::cout << "Healthy                     : " << "0" << std::endl;
-    //     std::cout << "Isolated                    : " << "1" << std::endl;
-    //     std::cout << "Sick                        : " << "2" << std::endl;
-    //     std::cout << "Dead                        : " << "3" << std::endl;
-    //     std::cout << "Immune                      : " << "4" << std::endl;
-    //     std::cout << "\n" << std::endl;
-    //     std::cout << "Parameter descriptions        :" << std::endl;
-    //     std::cout << "-v | --version                :       Show the program version." << std::endl;
-    //     std::cout << "-h | --help                   :       Show this message." << std::endl;
-    //     std::cout << "-r | --runs                   :       Define how many times the model will be executed, determining the number of results (integer)." << std::endl;
-    //     std::cout << "-p | --population             :       Define the population matrix side length. Use the square root, e.g., 100 corresponds to 10,000 (integer)." << std::endl;
-    //     std::cout << "-g | --generations            :       Specify the number of generations in weeks (integer)." << std::endl;
-    //     std::cout << "-s | --social-distance-effect :       Run the simulations with the social distancing/lockdown effect applied, reducing the disease contagion factor." << std::endl;
-    //     std::cout << "-t | --threads                :       Run the simulations with a multi-threaded profile. Specifies the number of threads the program may use. The maximum value is the number of threads available on the current processor (integer)." << std::endl;
-    //     std::cout << "-c | --contagion-factor       :       Defines the disease contagion factor, minimum 0.1, maximum 1 (double)." << std::endl;
-    //     std::cout << "-o | --output-state           :       Defines the state for which you want to obtain the number of affected individuals (integer)." << std::endl;
-    //     std::cout << "-f | --config-file            :       Set the .json config file. Check the docs to see the file standard." << std::endl;
-    //     std::cout << "-i | --image                  :       Generate a visual disease spread example as a .png image." << std::endl;
-    //     std::cout << "---------------------------------------------------------------------------------------------" << std::endl;
-    //     std::cout << "Default params: r(1000), p(100), g(10), c(0.5), o(3), s(false), t(1), i(false)" << std::endl;
-    // }
+    void ProgramInfoViwer::print_help()
+    {
+        std::cout << "-------------------------------------------------------------------------------------------" << std::endl;
+        std::cout << "Usage: simulator [-v | --version] [-h | --help] [-r | --runs <value>] [-p | --population <value>]" << std::endl;
+        std::cout << "                 [-g | --generations <value>] [-s | --social-distance-effect] [-t | --threads <value>]" << std::endl;
+        std::cout << "                 [-c | --contagion-factor <value>] [-o | --output-state <value>] [-i | --image]" << std::endl;
+        std::cout << "                 [-f | --config-file <value>]]" << std::endl;
+        std::cout << "\n" << std::endl;
+        // std::cout << "Multithreading is available : " << boolToString(MultithreadingController::currentProcessorSupportsMultithreading()) << "." <<std:: endl;
+        // std::cout << "CPU Threads available       : " << MultithreadingController::getCurrentProcessorAvailableThreads() << "." << std::endl;
+        std::cout << "\n" << std::endl;
+        std::cout << "Individual states           : " << std::endl;
+        std::cout << "Healthy                     : " << "0" << std::endl;
+        std::cout << "Isolated                    : " << "1" << std::endl;
+        std::cout << "Sick                        : " << "2" << std::endl;
+        std::cout << "Dead                        : " << "3" << std::endl;
+        std::cout << "Immune                      : " << "4" << std::endl;
+        std::cout << "\n" << std::endl;
+        std::cout << "Parameter descriptions        :" << std::endl;
+        std::cout << "-v | --version                :       Show the program version." << std::endl;
+        std::cout << "-h | --help                   :       Show this message." << std::endl;
+        std::cout << "-r | --runs                   :       Define how many times the model will be executed, determining the number of results (integer)." << std::endl;
+        std::cout << "-p | --population             :       Define the population matrix side length. Use the square root, e.g., 100 corresponds to 10,000 (integer)." << std::endl;
+        std::cout << "-g | --generations            :       Specify the number of generations in weeks (integer)." << std::endl;
+        std::cout << "-s | --social-distance-effect :       Run the simulations with the social distancing/lockdown effect applied, reducing the disease contagion factor." << std::endl;
+        std::cout << "-t | --threads                :       Run the simulations with a multi-threaded profile. Specifies the number of threads the program may use. The maximum value is the number of threads available on the current processor (integer)." << std::endl;
+        std::cout << "-c | --contagion-factor       :       Defines the disease contagion factor, minimum 0.1, maximum 1 (double)." << std::endl;
+        std::cout << "-o | --output-state           :       Defines the state for which you want to obtain the number of affected individuals (integer)." << std::endl;
+        std::cout << "-f | --config-file            :       Set the .json config file. Check the docs to see the file standard." << std::endl;
+        std::cout << "-i | --image                  :       Generate a visual disease spread example as a .png image." << std::endl;
+        std::cout << "---------------------------------------------------------------------------------------------" << std::endl;
+        std::cout << "Default params: r(1000), p(100), g(10), c(0.5), o(3), s(false), t(1), i(false)" << std::endl;
+    }
 
     void ProgramInfoViwer::print_version()
     {

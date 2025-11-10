@@ -8,6 +8,8 @@
 #ifndef PROGRAM_INFO_VIWER_H
 #define PROGRAM_INFO_VIWER_H
 
+#include "../simulator/Config.hpp"
+
 namespace presenters
 {
 
@@ -20,8 +22,7 @@ namespace presenters
 
             static void print_ASCII_art();
 
-            // TODO: Define &Config instance as param.
-            static void print_headers();
+            static void print_headers(simulator::Config &config);
 
             static void print_help();
 
