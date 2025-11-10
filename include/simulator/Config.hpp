@@ -9,6 +9,7 @@
 #define CONFIG_H
 
 #include <vector>
+#include <string>
 
 namespace simulator
 {
@@ -52,26 +53,26 @@ namespace simulator
 
             static Config build_from_config_file(const std::string &file_path);
 
-            int get_number_of_runs();
+            int get_number_of_runs() const;
 
-            int get_population_matrix_size();
+            int get_population_matrix_size() const;
 
-            int get_number_of_generations();
+            int get_number_of_generations() const;
 
-            double get_contagion_factor();
+            double get_contagion_factor() const;
 
-            int requested_state_count();
+            int get_requested_state_count() const;
 
-            bool get_apply_social_distance_effect();
+            bool get_apply_social_distance_effect() const;
 
-            int get_thread_count();
+            int get_thread_count() const;
 
-            bool get_generate_image();
+            bool get_generate_image() const;
 
-            const std::vector<std::vector<double>> &get_transition_probabilities();
+            const std::vector<std::vector<double>> &get_transition_probabilities() const;
     };
     
 
 };
 
-#endif
+#endif // CONFIG_H
