@@ -8,9 +8,23 @@
 #ifndef IMAGE_GENERATOR_H
 #define IMAGE_GENERATOR_H
 
+#include "../simulator/Individual.hpp"
+#include <vector>
+
+using Population = std::vector<Individual>;
+
 namespace image_generator
 {
     
+    class ImageGenerator
+    {
+
+        public:
+
+            static void generate(const char* name, Population& population);
+
+    };
+
 };
 
 #endif
