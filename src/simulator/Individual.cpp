@@ -3,7 +3,7 @@
 namespace simulator
 {
 
-    std::map<std::string, int> Individual::valid_states = { {"healthy", 0}, {"sick", 1}, {"dead", 2}, {"imune", 3} };
+    std::map<std::string, int> Individual::valid_states = { {"healthy", 0}, {"sick", 1}, {"dead", 2}, {"immune", 3} };
 
     Individual::Individual(std::string state)
     : state(Individual::valid_states[state])
