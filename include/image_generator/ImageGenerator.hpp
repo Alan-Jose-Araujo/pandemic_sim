@@ -11,7 +11,7 @@
 #include "../simulator/Individual.hpp"
 #include <vector>
 
-using Population = std::vector<Individual>;
+using Population = std::vector<std::vector<simulator::Individual>>;
 
 namespace image_generator
 {
@@ -21,7 +21,7 @@ namespace image_generator
 
         public:
 
-            static void generate(const char* name, Population& population);
+            static void generate(const char* file_name, Population& population);
 
     };
 
