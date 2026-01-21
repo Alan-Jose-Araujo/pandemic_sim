@@ -1,5 +1,5 @@
 /**
- * RandomNumberGenerator.hpp
+ * @file random_number_generator.hpp
  * @brief A thread-safe random number generator class.
  * @author Alan José <alanjsdelima@gmail.com>
  * @date 2026-01-21
@@ -30,6 +30,10 @@ namespace Rng
 
     public:
     
+        static constexpr double MAX_ACCEPTABLE_VALUE = 0.0;
+
+        static constexpr double MIN_ACCEPTABLE_VALUE = 1.0;
+
         RandomNumberGenerator(double minValue, double maxValue, unsigned int seed);
 
         RandomNumberGenerator(unsigned int seed);
