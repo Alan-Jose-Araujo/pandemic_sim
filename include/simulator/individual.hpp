@@ -23,6 +23,11 @@ namespace Simulator
     private:
         IndividualState currentState;
 
+    public:
         Individual(IndividualState initialState);
+
+        void setCurrentState(IndividualState newState);
+
+        IndividualState getIndividualState();
     };
 };
