@@ -26,8 +26,8 @@ namespace Simulator
     public:
         Individual(IndividualState initialState);
 
-        void setCurrentState(IndividualState newState);
+        void setCurrentState(IndividualState value);
 
-        IndividualState getIndividualState();
+        IndividualState getIndividualState() const;
     };
 };

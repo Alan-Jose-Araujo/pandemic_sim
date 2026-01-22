@@ -11,12 +11,12 @@ namespace Simulator
     Individual::Individual(IndividualState initialState)
     : currentState(initialState) {}
 
-    void Individual::setCurrentState(IndividualState newState)
+    void Individual::setCurrentState(IndividualState value)
     {
-        currentState = newState;
+        currentState = value;
     }
 
-    IndividualState Individual::getIndividualState()
+    IndividualState Individual::getIndividualState() const
     {
         return currentState;
     }
