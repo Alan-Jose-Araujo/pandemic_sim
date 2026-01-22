@@ -33,5 +33,4 @@ namespace Rng
     {
         generator.seed(seed);
     }
-
 };
