@@ -8,45 +8,30 @@
 
 namespace Rng
 {
-    std::mt19937 &RandomNumberGenerator::getGenerator()
-    {
-        auto timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    thread_local std::mt19937 RandomNumberGenerator::generator = [] {
         std::random_device randomDevice;
-        size_t hashedSeed = std::hash<size_t>()(timeSeed ^ randomDevice());
-        static std::mt19937 generator(hashedSeed);
-        return generator;
-    }
+        return std::mt19937(randomDevice() ^ static_cast<unsigned int>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
+    }();
 
-    RandomNumberGenerator::RandomNumberGenerator(double minValue, double maxValue, unsigned int seed)
-    {
-        std::random_device randomDevice;
-        size_t combinedSeed = std::hash<size_t>()(seed ^ randomDevice());
-        generator.seed(combinedSeed);
-    }
-
-    RandomNumberGenerator::RandomNumberGenerator(unsigned int seed)
-    : RandomNumberGenerator(
+    thread_local std::uniform_real_distribution<double> RandomNumberGenerator::distribution {
         RandomNumberGenerator::MIN_ACCEPTABLE_VALUE,
-        RandomNumberGenerator::MAX_ACCEPTABLE_VALUE,
-        seed
-    ) {}
-
-    RandomNumberGenerator::RandomNumberGenerator()
-    : RandomNumberGenerator(
-        RandomNumberGenerator::MIN_ACCEPTABLE_VALUE,
-        RandomNumberGenerator::MAX_ACCEPTABLE_VALUE,
-        std::chrono::high_resolution_clock::now().time_since_epoch().count()
-    ) {}
+        RandomNumberGenerator::MAX_ACCEPTABLE_VALUE
+    };
 
     double RandomNumberGenerator::getRandomNumber(double minValue, double maxValue)
     {
         std::uniform_real_distribution<> localDistribution(minValue, maxValue);
-        return localDistribution(this->generator);
+        return localDistribution(generator);
     }
 
     double RandomNumberGenerator::getRandomNumber()
     {
-        return distribution(this->generator);
+        return distribution(generator);
+    }
+
+    void RandomNumberGenerator::setSeed(unsigned int seed)
+    {
+        generator.seed(seed);
     }
 
 };
