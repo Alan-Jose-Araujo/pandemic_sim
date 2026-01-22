@@ -30,9 +30,9 @@ namespace Rng
 
     public:
     
-        static constexpr double MAX_ACCEPTABLE_VALUE = 0.0;
+        static constexpr double MIN_ACCEPTABLE_VALUE = 0.0;
 
-        static constexpr double MIN_ACCEPTABLE_VALUE = 1.0;
+        static constexpr double MAX_ACCEPTABLE_VALUE = 1.0;
 
         RandomNumberGenerator(double minValue, double maxValue, unsigned int seed);
 
