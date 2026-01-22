@@ -1,28 +1,25 @@
-# 1. Incluir o módulo auxiliar do Catch2 para descoberta automática de testes
+# 1. Includes the Catch2 helper module to discover automatically tests
 include(Catch)
 
-# 2. Criar o executável para os testes unitários
-# Podes adicionar mais ficheiros aqui conforme criares novos testes na pasta unit/
+# 2. Create the executable to the unit tests
 add_executable(unit_tests 
     unit/test_random_number_generator.cpp
-    # unit/outro_teste.cpp
 )
 
-# 3. Ligar as dependências
-# - simulator_lib: fornece o teu código e o caminho para os headers (include/)
-# - Catch2::Catch2WithMain: fornece a biblioteca Catch2 e gera o main() automaticamente
+# 3. Link the dependencies
+# - simulator_lib: provides the path to the headers (include/)
+# - Catch2::Catch2WithMain: Provides the Catch2 library and generates the main() method automatically
 target_link_libraries(unit_tests 
     PRIVATE 
         simulator_lib 
         Catch2::Catch2WithMain
 )
 
-# 4. Fazer com que o CMake "descubra" cada TEST_CASE individualmente
-# Isto permite que vejas o progresso de cada teste ao usar o comando 'ctest'
+# 4. Set the CMake to discover every TEST_CASE individually.
+# It allows to see the progress for each test with the 'ctest' command
 catch_discover_tests(unit_tests)
 
-# 5. Opcional: Criar um executável separado para testes de funcionalidade
-# Se desejar manter testes de integração separados dos unitários
+# 5. Creates an executable to the functional tests
 # add_executable(functional_tests 
 #     functional/test_simulation_flow.cpp
 # )
