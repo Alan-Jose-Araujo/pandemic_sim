@@ -103,8 +103,8 @@ namespace Facades
     Config Config::buildFromConfigFile(const std::string &filePath)
     {
         JSON null_value(nullptr);
-        bool configFileExists = Facades::JsonParser::isValidJson(filePath);
-        if(!configFileExists) {
+        bool configFileExistsAndIsValid = Facades::JsonParser::isValidJson(filePath);
+        if(!configFileExistsAndIsValid) {
             throw std::runtime_error("Could not open the config file: " + filePath + ". Check if the file exists or has a valid syntax.");
         }
 

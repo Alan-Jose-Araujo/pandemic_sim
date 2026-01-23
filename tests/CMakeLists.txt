@@ -9,6 +9,7 @@ add_definitions(-DTEST_DATA_PATH="${TEST_DATA_DIR}")
 add_executable(unit_tests
     unit/test_random_number_generator.cpp
     unit/test_json_parser.cpp
+    unit/test_config.cpp
 )
 
 # 3. Link the dependencies

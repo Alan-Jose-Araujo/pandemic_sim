@@ -1,0 +1,17 @@
+{
+	"number_of_runs": 10,
+	"population_matrix_size": 100,
+	"number_of_generations": 50,
+	"contagion_factor": 0.25,
+	"requested_state": 1,
+	"apply_social_distance_effect": true,
+	"thread_count": 4,
+	"generate_image": false,
+	"transition_probabilities": [
+        [0.62, 0.3, 0.05, 0.0, 0.01],
+        [0.05, 0.64, 0.1, 0.2],
+        [0.0, 0.1, 0.65, 0.1, 0.15],
+        [0.0, 0.0, 0.0, 1.0, 0.0],
+        [0.0, 0.05, 0.02, 0.0, 0.93]
+    ]
+}
