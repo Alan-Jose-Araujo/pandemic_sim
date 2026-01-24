@@ -103,7 +103,7 @@ namespace Simulator
                 this->individualTransition(i, j, &this->getSequentialRng());
             }
         }
-        this->setCurrentPopulation(this->getNextPopulation());
+        this->currentPopulation.swap(this->nextPopulation);
     }
 
     int RandomWalkModel::getStateCount(Simulator::IndividualState requestedState)
@@ -134,7 +134,7 @@ namespace Simulator
         this->sequentialRng = value;
     }
 
-    Rng::RandomNumberGenerator RandomWalkModel::getSequentialRng()
+    Rng::RandomNumberGenerator &RandomWalkModel::getSequentialRng()
     {
         return this->sequentialRng;
     }

@@ -55,7 +55,7 @@ namespace Simulator
 
         void setSequenialRng(Rng::RandomNumberGenerator value);
 
-        Rng::RandomNumberGenerator getSequentialRng();
+        Rng::RandomNumberGenerator &getSequentialRng();
 
         void setCurrentPopulation(std::vector<std::vector<Simulator::Individual>> value);
 

@@ -4,7 +4,7 @@
 
 using RNG = Rng::RandomNumberGenerator;
 
-TEST_CASE("RNG generates values ​​within the correct range.", "[unit][rng]")
+TEST_CASE("RNG generates values ​​within the correct range.", "[rng][unit]")
 {
     double result = RNG::getRandomNumber(),
     min = RNG::MIN_ACCEPTABLE_VALUE,
@@ -13,7 +13,7 @@ TEST_CASE("RNG generates values ​​within the correct range.", "[unit][rng]")
     CHECK(result <= max);
 }
 
-TEST_CASE("RNG has an approximately uniform distribution.", "[unit][rng]")
+TEST_CASE("RNG has an approximately uniform distribution.", "[rng][unit]")
 {
     const int iterations = 100000;
     std::map<int, int> counts;
