@@ -14,14 +14,16 @@
 
 namespace Simulator
 {
+    using Population = std::vector<std::vector<Simulator::Individual>>;
+
     class RandomWalkModel
     {
     protected:
         Rng::RandomNumberGenerator sequentialRng;
 
-        std::vector<std::vector<Simulator::Individual>> currentPopulation;
+        Population currentPopulation;
 
-        std::vector<std::vector<Simulator::Individual>> nextPopulation;
+        Population nextPopulation;
 
         std::vector<std::vector<double>> transitionProbabilities;
 
@@ -37,7 +39,7 @@ namespace Simulator
 
         void computeSocialInteractions(int line, int column, Rng::RandomNumberGenerator *randomNumberGenerator);
 
-        void computeSickContact(Simulator::Individual &individual, Simulator::Individual &neighbour, Rng::RandomNumberGenerator *randomNumberGenerator);
+        void computeSickContact(Simulator::Individual &individual, Simulator::Individual &neighbour, Rng::RandomNumberGenerator *randomNumberGenerator, double effectiveContagion);
 
         void individualTransition(int line, int column, Rng::RandomNumberGenerator *randomNumberGenerator);
 

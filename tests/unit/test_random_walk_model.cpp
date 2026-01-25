@@ -28,11 +28,11 @@ TEST_CASE("Random walk model can execute successfully", "[rwm][unit]")
         model = std::make_unique<Simulator::RandomWalkModel>(
             populationMatrixSize,
             contagionFactor,
-            applySocialDistanceEffect
+            applySocialDistanceEffect,
+            transition_probabilities
         );
-        model->setTransitionProbabilities(transition_probabilities);
-        model->simulation(numberOfGenerations);
-        result = model->getStateCount(Simulator::IndividualState::Dead);
+        model->startSimulation(numberOfGenerations);
+        result = model->getIndividualQuantityByState(Simulator::IndividualState::Dead);
         REQUIRE(result >= 0);
     }
 }
