@@ -9,11 +9,47 @@
 
 #include "rng/random_number_generator.hpp"
 #include "simulator/individual.hpp"
+#include "facades/config.hpp"
 #include <vector>
 
 namespace Simulator
 {
     class RandomWalkModel
     {
+    protected:
+        Rng::RandomNumberGenerator sequentialRng;
+
+        std::vector<std::vector<Simulator::Individual>> currentPopulation;
+
+        std::vector<std::vector<Simulator::Individual>> nextPopulation;
+
+        std::vector<std::vector<double>> transitionProbabilities;
+
+        double contagionFactor;
+
+        int populationMatrixSize;
+
+        bool applySocialDistanceEffect;
+
+        void initializePopulation();
+
+        void initializeSickIndividuals();
+
+        void computeSocialInteractions(int line, int column, Rng::RandomNumberGenerator *randomNumberGenerator);
+
+        void computeSickContact(Simulator::Individual &individual, Simulator::Individual &neighbour, Rng::RandomNumberGenerator *randomNumberGenerator);
+
+        void individualTransition(int line, int column, Rng::RandomNumberGenerator *randomNumberGenerator);
+
+        void goToNextGeneration();
+
+    public:
+        RandomWalkModel(int populationMatrixSize, double contagionFactor, bool applySocialDistanceEffect, std::vector<std::vector<double>> transitionProbabilities);
+
+        RandomWalkModel(Facades::Config &config);
+
+        int getIndividualQuantityByState(Simulator::IndividualState individualState);
+
+        void startSimulation(int generations);
     };
 };
