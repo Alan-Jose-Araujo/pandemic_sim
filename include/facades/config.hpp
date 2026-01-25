@@ -72,5 +72,7 @@ namespace Facades
         void setTransitionProbabilities(const std::vector<std::vector<double>>& value);
 
         static Config buildFromConfigFile(const std::string &filePath);
+
+        static void generateConfigFile(std::string outputPath);
     };
 };

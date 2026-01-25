@@ -7,6 +7,8 @@
 #include "facades/config.hpp"
 #include "facades/json_parser.hpp"
 #include <stdexcept>
+#include <fstream>
+#include <iomanip>
 
 namespace Facades
 {
@@ -104,7 +106,8 @@ namespace Facades
     {
         JSON null_value(nullptr);
         bool configFileExistsAndIsValid = Facades::JsonParser::isValidJson(filePath);
-        if(!configFileExistsAndIsValid) {
+        if (!configFileExistsAndIsValid)
+        {
             throw std::runtime_error("Could not open the config file: " + filePath + ". Check if the file exists or has a valid syntax.");
         }
 
@@ -121,5 +124,33 @@ namespace Facades
         configDto.setGenerateImage(parser.value("generate_image", false));
         configDto.setTransitionProbabilities(parser.value("transition_probabilities", null_value));
         return configDto;
+    }
+
+    void Config::generateConfigFile(std::string outputPath)
+    {
+        if(outputPath.find(".json") == std::string::npos) {
+            outputPath += ".json";
+        }
+
+        JSON json;
+        std::vector<std::vector<double>> transitionProbabilities = {
+            {0.62, 0.3, 0.05, 0.0, 0.03}, // healthy
+            {0.05, 0.64, 0.1, 0.01, 0.2}, // isolated
+            {0.0, 0.1, 0.65, 0.1, 0.15},  // sick
+            {0.0, 0.0, 0.0, 1.0, 0.0},    // dead
+            {0.0, 0.05, 0.02, 0.0, 0.93}  // immune
+        };
+        json["number_of_runs"] = 0;
+        json["population_matrix_size"] = 0;
+        json["number_of_generations"] = 0;
+        json["contagion_factor"] = 0.0;
+        json["requested_state"] = static_cast<int>(Simulator::IndividualState::Healthy);
+        json["apply_social_distance_effect"] = false;
+        json["thread_count"] = 1;
+        json["generate_image"] = false;
+        json["transition_probabilities"] = transitionProbabilities;
+
+        std::ofstream file(outputPath);
+        file << std::setw(4) << json << std::endl;
     }
 };
