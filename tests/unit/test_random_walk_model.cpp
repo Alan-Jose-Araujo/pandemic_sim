@@ -7,7 +7,6 @@
 
 TEST_CASE("Random walk model can execute successfully", "[rwm][unit]")
 {
-    int numberOfRuns = 100;
     int populationMatrixSize = 100;
     int numberOfGenerations = 10;
     double contagionFactor = 0.5;
