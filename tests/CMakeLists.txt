@@ -11,6 +11,7 @@ add_executable(unit_tests
     unit/test_json_parser.cpp
     unit/test_config.cpp
     unit/test_random_walk_model.cpp
+    unit/test_fs_handler.cpp
 )
 
 # 3. Link the dependencies
