@@ -9,7 +9,7 @@
 namespace Simulator
 {
     RandomWalkModel::RandomWalkModel(int populationMatrixSize, double contagionFactor, bool applySocialDistanceEffect, std::vector<std::vector<double>> transitionProbabilities)
-    : populationMatrixSize(populationMatrixSize), contagionFactor(contagionFactor), applySocialDistanceEffect(applySocialDistanceEffect), transitionProbabilities(transitionProbabilities),
+    : populationMatrixSize(populationMatrixSize), contagionFactor(contagionFactor), applySocialDistanceEffect(applySocialDistanceEffect), transitionProbabilities(std::move(transitionProbabilities)),
     sequentialRng()
     {
         this->initializePopulation();
@@ -18,7 +18,7 @@ namespace Simulator
 
     RandomWalkModel::RandomWalkModel(Facades::Config &config)
     : populationMatrixSize(config.getPopulationMatrixSize()), contagionFactor(config.getContagionFactor()), applySocialDistanceEffect(config.getApplySocialDistanceEffect()),
-    transitionProbabilities(config.getTransitionProbabilities()), sequentialRng()
+    transitionProbabilities(std::move(config.getTransitionProbabilities())), sequentialRng()
     {
         this->initializePopulation();
         this->initializeSickIndividuals();

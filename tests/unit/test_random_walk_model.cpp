@@ -34,4 +34,42 @@ TEST_CASE("Random walk model can execute successfully", "[rwm][unit]")
         result = model->getIndividualQuantityByState(Simulator::IndividualState::Dead);
         REQUIRE(result >= 0);
     }
+
+    SECTION("RWM Death toll follows a non-deterministic but plausible results")
+    {
+        std::unique_ptr<Simulator::RandomWalkModel> model;
+        int result;
+        model = std::make_unique<Simulator::RandomWalkModel>(
+            populationMatrixSize,
+            contagionFactor,
+            applySocialDistanceEffect,
+            transition_probabilities
+        );
+        model->startSimulation(numberOfGenerations);
+        result = model->getIndividualQuantityByState(Simulator::IndividualState::Dead);
+        INFO("Death toll: " << result);
+        CHECK(result > 0);
+        CHECK(result < populationMatrixSize * populationMatrixSize);
+    }
+
+    SECTION("RWM statistical variance test (Monte Carlo)")
+    {
+        std::vector<int> results;
+        for(int i = 0; i < 100; ++i) {
+            auto model = std::make_unique<Simulator::RandomWalkModel>(
+                populationMatrixSize,
+                contagionFactor,
+                applySocialDistanceEffect,
+                transition_probabilities
+            );
+            model->startSimulation(numberOfGenerations);
+            results.push_back(
+                model->getIndividualQuantityByState(Simulator::IndividualState::Dead)
+            );
+        }
+
+        double mean = std::accumulate(results.begin(), results.end(), 0.0) / results.size();
+        INFO("Mean: " << mean);
+        REQUIRE(mean > 0);
+    }
 }
