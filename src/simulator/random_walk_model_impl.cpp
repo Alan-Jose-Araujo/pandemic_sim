@@ -40,7 +40,7 @@ namespace Simulator
         this->nextPopulation[startIndex][startIndex].setCurrentState(IndividualState::Sick);
     }
 
-    void RandomWalkModel::computeSocialInteractions(int line, int column, Rng::RandomNumberGenerator *randomNumberGenerator)
+    void RandomWalkModel::computeSocialInteractions(int line, int column)
     {
         int initialLine = std::max(0, line - 1);
         int finalLine = std::min(line + 2, this->populationMatrixSize);
@@ -72,9 +72,8 @@ namespace Simulator
 
                 if(neighbour.getIndividualState() == IndividualState::Sick) {
                     this->computeSickContact(
-                        this->nextPopulation[line][column],
-                        neighbour,
-                        randomNumberGenerator,
+                        line,
+                        column,
                         effectiveContagion
                     );
                 }
@@ -82,28 +81,28 @@ namespace Simulator
         }
     }
 
-    void RandomWalkModel::computeSickContact(Simulator::Individual &individual, Simulator::Individual &neighbour, Rng::RandomNumberGenerator *randomNumberGenerator, double effectiveContagion)
+    void RandomWalkModel::computeSickContact(int line, int column, double effectiveContagion)
     {
-        if(individual.getIndividualState() == IndividualState::Dead || individual.getIndividualState() == IndividualState::Sick) return;
+        if(this->nextPopulation[line][column].getIndividualState() == Simulator::IndividualState::Sick) return;
 
-        double randomNumber = randomNumberGenerator->getRandomNumber();
+        double number = Rng::RandomNumberGenerator::getRandomNumber();
 
-        if(randomNumber < effectiveContagion) {
-            individual.setCurrentState(IndividualState::Sick);
+        if(number < effectiveContagion) {
+            this->nextPopulation[line][column].setCurrentState(Simulator::IndividualState::Sick);
         }
     }
 
-    void RandomWalkModel::individualTransition(int line, int column, Rng::RandomNumberGenerator *randomNumberGenerator)
+    void RandomWalkModel::individualTransition(int line, int column)
     {
         Individual &individual = this->currentPopulation[line][column];
 
         if(individual.getIndividualState() == IndividualState::Dead) return;
 
         if(individual.getIndividualState() == IndividualState::Healthy) {
-            this->computeSocialInteractions(line, column, randomNumberGenerator);
+            this->computeSocialInteractions(line, column);
         } else {
             const std::vector<double> &probabilities = this->transitionProbabilities[static_cast<int>(individual.getIndividualState())];
-            double number = randomNumberGenerator->getRandomNumber();
+            double number = Rng::RandomNumberGenerator::getRandomNumber();
 
             double cumulativeProbability = 0.0;
             for(size_t i = 0; i < probabilities.size(); ++i) {
@@ -120,7 +119,7 @@ namespace Simulator
     {
         for(int i = 0; i < this->populationMatrixSize; ++i) {
             for(int j = 0; j < this->populationMatrixSize; ++j) {
-                this->individualTransition(i, j, &this->sequentialRng);
+                this->individualTransition(i, j);
             }
         }
 

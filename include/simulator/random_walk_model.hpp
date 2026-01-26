@@ -37,11 +37,11 @@ namespace Simulator
 
         void initializeSickIndividuals();
 
-        void computeSocialInteractions(int line, int column, Rng::RandomNumberGenerator *randomNumberGenerator);
+        void computeSocialInteractions(int line, int column);
 
-        void computeSickContact(Simulator::Individual &individual, Simulator::Individual &neighbour, Rng::RandomNumberGenerator *randomNumberGenerator, double effectiveContagion);
+        void computeSickContact(int line, int column, double effectiveContagion);
 
-        void individualTransition(int line, int column, Rng::RandomNumberGenerator *randomNumberGenerator);
+        void individualTransition(int line, int column);
 
         void goToNextGeneration();
 
