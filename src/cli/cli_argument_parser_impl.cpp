@@ -10,9 +10,9 @@
 
 namespace Cli
 {
-    void CliArgumentParser::addOption(char shortCode, const std::string &longName, bool hasValue, Callback callback)
+    void CliArgumentParser::addOption(char shortCode, const std::string &longName, CliArgumentType argumentType, Callback callback)
     {
-        options[shortCode] = { longName, hasValue, callback };
+        options[shortCode] = { longName, argumentType, callback };
     }
 
     void CliArgumentParser::parse(int argc, char *argv[])
@@ -22,11 +22,11 @@ namespace Cli
 
         for(auto const &[code, data] : options) {
             optString += code;
-            if(data.hasValue) optString += ':';
+            if(data.argumentType != CliArgumentType::None) optString += ':';
 
             longOptions.push_back({
                 data.longName.c_str(),
-                data.hasValue ? required_argument : no_argument,
+                data.argumentType,
                 nullptr,
                 code
             });

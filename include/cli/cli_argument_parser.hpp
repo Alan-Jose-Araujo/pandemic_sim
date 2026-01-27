@@ -16,7 +16,7 @@ namespace Cli
 {
     using Callback = std::function<void(const std::string &)>;
 
-    enum class CliArgumentType
+    enum CliArgumentType
     {
         Required = required_argument,
         Optional = optional_argument,
@@ -26,7 +26,7 @@ namespace Cli
     struct CliArgumentData
     {
         std::string longName;
-        bool hasValue;
+        CliArgumentType argumentType;
         Callback callback;
     };
 
@@ -36,7 +36,7 @@ namespace Cli
         std::map<char, CliArgumentData> options;
 
     public:
-        void addOption(char shortCode, const std::string &longName, bool hasValue, Callback callback);
+        void addOption(char shortCode, const std::string &longName, CliArgumentType argumentType, Callback callback);
 
         void parse(int argc, char *argv[]);
     };
