@@ -23,32 +23,24 @@
 
     void InfoViwer::printHeaders(Facades::Config &config)
     {
-      std::function<std::string(bool)> boolToString = [](bool value) {
-          return value ? std::to_string("Yes") : std::to_string("No");
-      };
-
       int populationMatrixSize = config.getPopulationMatrixSize();
-      std::string applySocialDistanceEffectStr = boolToString(config.getApplySocialDistanceEffect());
-      std::string generateImageOnFinishStr = boolToString(config.getGenerateImage());
+      std::string applySocialDistanceEffectStr = config.getApplySocialDistanceEffect() ? "Yes" : "No";
+      std::string generateImageOnFinishStr = config.getGenerateImage() ? "Yes" : "No";
 
-      cout << "-------------------------------------------------------------------------------------------" << endl;
+      std::cout << "-------------------------------------------------------------------------------------------" << std::endl;
       this->printASCIIArt();
-      cout << "-- Number of runs: " << config.getNumberOfRuns() << endl;
-      cout << "-- Population matrix size: " << populationMatrixSize << " (" << populationMatrixSize * populationMatrixSize << " individuals)" << endl;
-      cout << "-- Number of generations: " << config.getNumberOfGenerations() << endl;
-      cout << "-- Disease contagion factor: " << config.getContagionFactor() << endl;
-      cout << "-- Social distance effect applyied: " << applySocialDistanceEffectStr << endl;
-      cout << "-- Threads: " << config.getThreadCount() << endl;
-      cout << "-- Generate visual example image on finish: " << generateImageOnFinishStr << endl;
-      cout << "-------------------------------------------------------------------------------------------" << endl;
+      std::cout << "-- Number of runs: " << config.getNumberOfRuns() << std::endl;
+      std::cout << "-- Population matrix size: " << populationMatrixSize << " (" << populationMatrixSize * populationMatrixSize << " individuals)" << std::endl;
+      std::cout << "-- Number of generations: " << config.getNumberOfGenerations() << std::endl;
+      std::cout << "-- Disease contagion factor: " << config.getContagionFactor() << std::endl;
+      std::cout << "-- Social distance effect applyied: " << applySocialDistanceEffectStr << std::endl;
+      std::cout << "-- Threads: " << config.getThreadCount() << std::endl;
+      std::cout << "-- Generate visual example image on finish: " << generateImageOnFinishStr << std::endl;
+      std::cout << "-------------------------------------------------------------------------------------------" << std::endl;
     }
 
     void InfoViwer::printHelp()
     {
-      std::function<std::string(bool)> boolToString = [](bool value) {
-          return value ? std::to_string("Yes") : std::to_string("No");
-      };
-
       printASCIIArt();
       std::cout << "-------------------------------------------------------------------------------------------" << std::endl;
       std::cout << "Usage: simulator [-v | --version] [-h | --help] [-r | --runs <value>] [-p | --population <value>]" << std::endl;
@@ -56,8 +48,8 @@
       std::cout << "                 [-c | --contagion-factor <value>] [-o | --output-state <value>] [-i | --image]" << std::endl;
       std::cout << "                 [-f | --config-file <value>]]" << std::endl;
       std::cout << "\n" << std::endl;
-      std::cout << "Multithreading is available : " << boolToString(Facades::MultithreadingController::currentProcessorSupportsMultithreading()) << "." << std::endl;
-      std::cout << "CPU Threads available       : " << Facades::MultithreadingController::getCurrentProcessorAvailableThreads() << "." << std::endl;
+      std::cout << "Multithreading is available : " << (Facades::MultithreadController::currentProcessorSupportsMultithreading() ? "Yes" : "No") << "." << std::endl;
+      std::cout << "CPU Threads available       : " << Facades::MultithreadController::getCurrentProcessorAvailableThreads() << "." << std::endl;
       std::cout << "\n" << std::endl;
       std::cout << "Individual states           : " << std::endl;
       std::cout << "Healthy                     : " << "0" << std::endl;

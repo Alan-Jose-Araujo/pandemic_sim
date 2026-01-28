@@ -9,6 +9,7 @@
 
 #include "simulator/individual.hpp"
 #include <vector>
+#include "stb_image_write.h"
 
  namespace VisualGenerator
  {
