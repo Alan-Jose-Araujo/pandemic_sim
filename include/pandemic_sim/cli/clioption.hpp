@@ -7,6 +7,7 @@
 
 #include <string>
 #include <functional>
+#include <optional>
 #include "pandemic_sim/cli/argtype.hpp"
 
 /**
@@ -15,12 +16,12 @@
  * std::string longName,
  * Cli::ArgType argType,
  * std::string description,
- * Cli::ArgumentCallback callback.
+ * Cli::ArgumentCallback argumentCallback.
  */
 namespace Cli
 {
     // The callback receives the option value (empty string if not exists).
-    using ArgumentCallback = std::function<void(const std::string&)>;
+    using ArgumentCallback = std::function<void(const std::optional<std::string>&)>;
 
     struct CliOption
     {
@@ -28,6 +29,6 @@ namespace Cli
         std::string longName; // Full option name.
         ArgType argType; // Argument type (if has none, required or optional argument).
         std::string description; // Brief description of argument usage.
-        ArgumentCallback callback; // Argument action.
+        ArgumentCallback argumentCallback; // Argument action.
     };
 };
