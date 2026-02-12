@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(PandemicSim VERSION 1.0)
+project(PandemicSim VERSION 2.0)
 
 # --- Global Build Configurations ---
 

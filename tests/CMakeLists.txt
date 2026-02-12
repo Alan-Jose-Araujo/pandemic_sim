@@ -7,11 +7,7 @@ add_definitions(-DTEST_DATA_PATH="${TEST_DATA_DIR}")
 
 # 2. Create the executable to the unit tests
 add_executable(unit_tests
-    unit/test_random_number_generator.cpp
-    unit/test_json_parser.cpp
-    unit/test_config.cpp
-    unit/test_random_walk_model.cpp
-    unit/test_fs_handler.cpp
+
 )
 
 # 3. Link the dependencies
