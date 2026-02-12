@@ -1,17 +1,20 @@
 /**
- * @file argtype.hpp
- * @brief Argument type enum for cli argument parser.
-**/
+* @file argtype.hpp
+* @brief Argument type enum for cli argument parser.
+*/
 
 #pragma once
 
 /**
- * @class ArgType
+ * @enum ArgType
  * Cases: None, Required, Optional.
  */
-enum class ArgType
+namespace Cli
 {
-    None, // no_argument
-    Required, // required_argument
-    Optional // optional_argument
+    enum class ArgType
+    {
+        None, // no_argument
+        Required, // required_argument
+        Optional // optional_argument
+    };
 };
