@@ -37,6 +37,8 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2 json stb)
 
+list(APPEND CMAKE_MODULE_PATH "${catch2_SOURCE_DIR}/extras")
+
 # --- Source Files Management ---
 
 file(GLOB_RECURSE ALL_SOURCES "src/*.cpp")
@@ -55,8 +57,8 @@ target_include_directories(simulator_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/incl
 
 # Link JSON and STB to the library
 # STB is linked as INTERFACE because we only need the header path
-target_link_libraries(simulator_lib 
-    PUBLIC 
+target_link_libraries(simulator_lib
+    PUBLIC
         nlohmann_json::nlohmann_json
         stb_headers
 )

@@ -14,6 +14,9 @@ namespace Cli
 
     void CliParser::parse(int argc, char* argv[])
     {
+        // Essential reset;
+        optind = 1;
+
         // Local options registry.
         std::string shortOptions;
         std::vector<struct option> longOptionsC;
@@ -49,7 +52,6 @@ namespace Cli
 
         int opt;
         int optionIndex = 0;
-        optind = 1;
 
         while ((opt = getopt_long(argc, argv, shortOptions.c_str(), longOptionsC.data(), &optionIndex)) != -1)
         {
